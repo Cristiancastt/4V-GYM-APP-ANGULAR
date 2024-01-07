@@ -1,27 +1,47 @@
-# GymApp
+# Gym Interface Manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+## Description
 
-## Development server
+This interface development application is designed to manage monitors and activities in a gym. The main objective of this practice is to faithfully implement the interface according to the provided design, even if it appears unattractive. Additionally, the goal is to create reusable components to enhance system modularity.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Key Features
 
-## Code scaffolding
+- **Header and Logo:**
+  - The page always includes a header with the gym's name and logo.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Function Selector:**
+  - At the bottom, there is a function selector allowing users to choose between "Activities" and "Monitors."
 
-## Build
+## Activities Page
+  ![Carrousel](./images/inicio.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+- **Date Selector:**
+  - Users can choose a date and navigate between different dates.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Activity Blocks:**
+  - Each day displays three fixed activity blocks.
 
-## Running end-to-end tests
+- **Activity Management:**
+  - Users can add activities to free time blocks using a form.
+  - Ability to edit and delete existing activities.
+  - ![Carrousel](./images/addactivity.png)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Activity Information:**
+  - Each activity card displays the monitors and activity type.
+  - Depending on the activity type, there can be 1 to N assigned monitors.
 
-## Further help
+## Monitors Page
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- **Monitors Carousel:**
+  - Displays the current monitors in carousel mode.
+  - ![Carrousel](./images/monitors.png)
+
+
+- **Monitor Management:**
+  - Ability to create new monitors.
+  - Editing and deletion of selected monitors.
+  - ![Carrousel](./images/addmonitor.png)
+
+
+
