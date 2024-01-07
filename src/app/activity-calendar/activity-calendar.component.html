@@ -1,50 +1,203 @@
 <div class="flex justify-between items-center p-2">
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-900" (click)="decrementDate()"><i class="fa-solid fa-arrow-left"></i></button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-900"
+        (click)="decrementDate()"><i class="fa-solid fa-arrow-left"></i></button>
     <p class="text-center">{{ formattedDate }}</p>
     <button class="bg-blue-500 text-white px-4 py-2 rounded
     hover:bg-blue-600 active:bg-blue-900" (click)="incrementDate()"><i class="fa-solid fa-arrow-right"></i></button>
 </div>
 
 
+<div id="addActivityCard" #addActivityCard class="hidden absolute inset-0 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96 z-10">
+        <h2 class="text-2xl font-semibold mb-4 text-center">Añadir Actividad</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+                <label for="select" class="block text-sm font-medium text-gray-600">Tipo de Actividad</label>
+                <select id="selectTypeOfActivity" name="select" class="mt-1 p-2 w-full border rounded-md" formControlName="activityTypeId">
+                    @for (activity of listActivitiesTypes; track $index) {
+                    <option value="{{ activity.id }}">{{ activity.name }}</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="select" class="block text-sm font-medium text-gray-600">Monitor1</label>
+                <select id="selectMonitor1" name="select" class="mt-1 p-2 w-full border rounded-md"
+                formControlName="monitor1">
+                    @for (monitor of listMonitors; track $index) {
+                    <option value="{{ monitor.id }}">{{ monitor.name }}</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="select" class="block text-sm font-medium text-gray-600">Monitor2</label>
+                <select id="selectMonitor2" name="select" class="mt-1 p-2 w-full border rounded-md"
+                formControlName="monitor2">
+                    @for (monitor of listMonitors; track $index) {
+                    <option value="{{ monitor.id }}">{{ monitor.name }}</option>
+                    }
+                </select>
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                [disabled]="form.invalid" [style.cursor]="form.invalid ? 'not-allowed' : 'pointer'"
+                >Aceptar</button>
+                <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md"
+                (click)="closeCard()">Cancelar</button>
+            </div>
+            {{form.value|json}}
+        </form>
+    </div>
+</div>
+
+
+
+<!-- @if (errorMessage) {
+    {{ errorMessage}}
+} -->
+<!-- {{ activities | json }} -->
+<!-- @for (response of activities; track $index) {
+    <p>ID: {{ response.id }}</p>
+    <p>Activity Type ID: {{ response.activity_type_id }}</p>
+    <p>Date Start: {{ response.date_start }}</p>
+    <p>Date End: {{ response.date_end }}</p>
+    @for (monitor of response.monitors; track $index) {
+        <p>Number of Monitors: {{ response.monitors.length }}</p>
+        <p>Monitor ID: {{ monitor.id }}</p>
+        <p>Name: {{ monitor.name }}</p>
+        <p>Email: {{ monitor.email }}</p>
+        <p>Phone: {{ monitor.phone }}</p>
+        <p>Photo: {{ monitor.photo }}</p>
+    }
+} -->
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Hora
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Monitor1
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Monitor2
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Actividad
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Acción
-                </th>
-            </tr>
-        </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
-                <td class="px-6 py-4">
-                    Silver
+            @if (errorMessage) {
+            <tr class="text-center">
+                <td class="px-6 py-4" colspan="1">
+                    <p class="text-black-500">09:00<br>10:30</p>
                 </td>
-                <td class="px-6 py-4">
-                    Laptop
+                <td class="px-6 py-4" colspan="3">
+                    <p class="text-red-500 fw-bolder">FREE</p>
                 </td>
-                <td class="px-6 py-4">
-                    $2999
+                <td class="px-6 py-4" colspan="1">
+                    <button class="btn items-center justify-center" (click)="card('09:00:00')"><i class="fa-solid fa-plus"></i></button>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td class="px-6 py-4" colspan="1">
+                    <p class="text-black-500">13:30<br>15:00</p>
+                </td>
+                <td class="px-6 py-4" colspan="3">
+                    <p class="text-red-500 fw-bolder">FREE</p>
+                </td>
+                <td class="px-6 py-4" colspan="1">
+                    <button class="btn items-center justify-center" (click)="card('13:30:00')"><i class="fa-solid fa-plus"></i></button>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td class="px-6 py-4" colspan="1">
+                    <p class="text-black-500">17:30<br>19:00</p>
+                </td>
+                <td class="px-6 py-4" colspan="3">
+                    <p class="text-red-500 fw-bolder">FREE</p>
+                </td>
+                <td class="px-6 py-4" colspan="1">
+                    <button class="btn items-center justify-center" (click)="card('17:30:00')"><i class="fa-solid fa-plus"></i></button>
                 </td>
             </tr>
             
+            
+
+            }@else {
+            
+            @for (response of activities; track $index) {
+            <tr class="bg-gray-100 hover:bg-gray-200 transition ease-in-out duration-150">
+                <td class="px-6 py-4">
+                    <p>{{ response.date_start | date:'HH:mm' }}</p>
+                    <p>{{ response.date_end | date:'HH:mm' }}</p>
+                </td>
+
+                
+
+                @if (response.monitors && response.monitors.length > 0) {
+                @for (monitor of response.monitors; track $index) {
+                <td class="px-6 py-4" [attr.colspan]="response.monitors.length === 2 ? 1 : 2">
+                    <div class="text-center">
+                        <i class="fa-solid fa-user text-4xl"></i>
+                        <p class="text-sm">{{ monitor.name }}</p>
+                    </div>
+
+                </td>
+                }
+                }@else {
+                <td class="px-6 py-4" colspan="2">
+                    <div class="text-center">
+                        <p class="text-red-500 text-4xl">No hay monitores</p>
+                    </div>
+
+                </td>
+                }
+
+                <td class="px-6 py-4">
+                    <!-- <p>{{ response.activity_type_id }}</p> -->
+                    @if (response.activity_type_id==1) {
+                    <p class="text-4xl">
+                        <i class="fa-solid fa-dumbbell text-blue-500"></i>
+                    </p>
+
+                    }@else if (response.activity_type_id==2) {
+                    <p class="text-4xl">
+                        <i class="fa-solid fa-bicycle text-blue-500"></i>
+                    </p>
+
+                    }@else if (response.activity_type_id==3) {
+                    <p class="text-4xl">
+                        <i class="fa-solid fa-person-running text-blue-500"></i>
+                    </p>
+                    }
+                </td>
+                <td class="px-6 py-4 p-3">
+                    <button
+                        class="p-2 m-1 bg-red-500 text-white hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800 rounded-full"
+                        (click)="onDeleteActivity(response.id)">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <button
+                        class="p-2 m-1 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800 rounded-full"
+                        (click)="onUpdateActivity(response.id)">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                </td>
+            </tr>
+            }
+            {{ checkMissingHours() }}
+            @for (missingHour of listDateStart; track $index) {
+                <tr class="text-center">
+                  <td class="px-6 py-4" colspan="1">
+                    <p class="text-black-500">{{ missingHour }}<br>{{ calculateEndTime(missingHour) }}</p>
+                  </td>
+                  <td class="px-6 py-4" colspan="3">
+                    <p class="text-red-500 fw-bolder">FREE</p>
+                  </td>
+                  <td class="px-6 py-4" colspan="1">
+                    <button class="btn items-center justify-center" (click)="card(missingHour+':00')"><i class="fa-solid fa-plus"></i></button>
+                  </td>
+                </tr>
+              }
+            
+            
+
+
+
+            }
+
+
+
+
+
+
+
         </tbody>
     </table>
 </div>
-
-  
