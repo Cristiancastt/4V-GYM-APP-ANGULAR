@@ -89,14 +89,16 @@ export class ActivityCalendarComponent {
       if (activityTypeId && activityTypeId !== '') {
         activityData.activity_type_id = parseInt(activityTypeId, 10);
       }
-      if (monitor1Id && monitor1Id !== '') {
+      if (monitor1Id) {
         activityData.monitors.push({ "id": parseInt(monitor1Id, 10) });
+      }
+      
+      if (monitor2Id) {
+        activityData.monitors.push({ "id": parseInt(monitor2Id, 10) });
       }
       activityData.date_end = this.date_end;
       activityData.date_start = this.date_start;
-      if (monitor2Id && monitor2Id !== '') {
-        activityData.monitors.push({ "id": parseInt(monitor2Id, 10) });
-      }
+
       this.apiService.addActivity(activityData).subscribe(
         response => {
           console.log('Actividad agregada exitosamente:', response);
@@ -124,11 +126,14 @@ export class ActivityCalendarComponent {
     this.formatDate(hora);
   }
 
+  
+
 
 
   @ViewChild('addActivityCard', { static: false }) cardActivity!: ElementRef;
 
   closeCard() {
+
     this.cardActivity.nativeElement.classList.add('hidden');
   }
 

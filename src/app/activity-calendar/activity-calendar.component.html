@@ -7,7 +7,7 @@
 </div>
 
 
-<div id="addActivityCard" #addActivityCard class="hidden absolute inset-0 flex items-center justify-center">
+<div id="addActivityCard" #addActivityCard class="hidden absolute inset-0 flex items-center justify-center z-10">
     <div class="bg-white p-8 rounded-lg shadow-md w-96 z-10">
         <h2 class="text-2xl font-semibold mb-4 text-center">Añadir Actividad</h2>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -44,7 +44,7 @@
                 <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md"
                 (click)="closeCard()">Cancelar</button>
             </div>
-            {{form.value|json}}
+            <!-- {{form.value|json}} -->
         </form>
     </div>
 </div>
